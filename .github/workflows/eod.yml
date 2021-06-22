@@ -33,7 +33,7 @@ jobs:
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
           pipenv install --dev
-      
+
       - name: execute py script # run endofday_data.py to get the latest data
 
         run: pipenv run python endofday_data.py
@@ -43,3 +43,6 @@ jobs:
           git config --local user.email ajakzhedgar@gmail.com
           git config --local user.name ajakaiye33
           git add -A
+          timestamp=$(date --rfc-2822)
+          git commit -m "updated data:${timestamp}" || exit 0
+          git push
