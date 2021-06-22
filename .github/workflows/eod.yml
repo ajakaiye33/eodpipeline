@@ -1,0 +1,51 @@
+name: nse-eod-data
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 1-5'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner
+
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9' # install the python version needed
+
+      - name: install pipenv and dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade pipenv wheel
+      - id: cache-pipenv
+        uses: actions/cache@v1
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+
+      - name: Install dependencies
+        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        run: |
+          pipenv install --dev
+      - name: execute py script # run endofday_data.py to get the latest data
+        uses: jakejarvis/s3-sync-action@master
+        with:
+            args: --acl public-read --follow-symlinks
+        env:
+            AWS_S3_BUCKET: ${{secrets.AWS_S3_BUCKET}}
+            AWS_ACC_KEY_ID: ${{secrets.AWS_ACC_KEY_ID}}
+            AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+
+        run: pipenv run python nse_disclosure.py
+
+      - name: commit & push files
+        run: |
+          git config --local user.email ajakzhedgar@gmail.com
+          git config --local user.name ajakaiye33
+          git add -A
