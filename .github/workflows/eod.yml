@@ -10,10 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    #- name: checkout repo content
+     - uses: actions/checkout@v2 # checkout the repository content to github runner
+     - uses: jakejarvis/s3-sync-action@master
 
-      - name: checkout repo content
-        uses: actions/checkout@v2 # checkout the repository content to github runner
-        uses: jakejarvis/s3-sync-action@master
+
 
 
       - name: setup python
@@ -36,6 +37,7 @@ jobs:
         run: |
           pipenv install --dev
       - name: execute py script # run endofday_data.py to get the latest data
+
 
 
         env:
