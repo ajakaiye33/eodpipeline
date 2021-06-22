@@ -10,13 +10,15 @@ import configparser
 import pandas as pd
 
 
+URL = API_TOKEN
+
+
 # save the days trading stats
-URL = URL
 
 
 def json2csv(URL=URL):
     """
-    Exctract and update csv
+    Extract and update csv
     """
     URL = str(URL)
     eod = './docs/eodfrm210621.csv'
