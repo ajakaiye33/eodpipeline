@@ -10,7 +10,7 @@ import configparser
 import pandas as pd
 
 
-URL = API_TOKEN
+URL = 'https://doclib.ngxgroup.com/REST/api/statistics/equities/?market=&sector=&orderby=&pageSize=300&pageNo=0'
 
 
 # save the days trading stats
