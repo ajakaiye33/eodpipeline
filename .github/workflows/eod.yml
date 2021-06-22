@@ -13,6 +13,8 @@ jobs:
 
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content to github runner
+        uses: jakejarvis/s3-sync-action@master
+
 
       - name: setup python
         uses: actions/setup-python@v2
@@ -34,18 +36,19 @@ jobs:
         run: |
           pipenv install --dev
       - name: execute py script # run endofday_data.py to get the latest data
-        uses: jakejarvis/s3-sync-action@master
-        with:
-            args: --acl public-read --follow-symlinks
+
+
         env:
             AWS_S3_BUCKET: ${{secrets.AWS_S3_BUCKET}}
             AWS_ACC_KEY_ID: ${{secrets.AWS_ACC_KEY_ID}}
             AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
 
-        run: pipenv run python nse_disclosure.py
+        run: pipenv run python endofday_data.py
 
       - name: commit & push files
         run: |
           git config --local user.email ajakzhedgar@gmail.com
           git config --local user.name ajakaiye33
           git add -A
+# with:
+#     args: --acl public-read --follow-symlinks
