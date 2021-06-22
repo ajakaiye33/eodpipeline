@@ -11,6 +11,7 @@ import pandas as pd
 
 
 # save the days trading stats
+URL = URL
 
 
 def json2csv(URL=URL):
