@@ -28,10 +28,10 @@ def json2csv(URL=URL):
     parser = configparser.ConfigParser()
     parser.read("eod.conf")
     AWS_SECRET_ACCESS_KEY = parser.get("aws_cred", "AWS_SECRET_ACCESS_KEY")
-    AWS_ACC_KEY_ID = parser.get("aws_cred", "AWS_ACC_KEY_ID")
+    AWS_ACCESS_KEY_ID = parser.get("aws_cred", "AWS_ACC_KEY_ID")
     AWS_S3_BUCKET = parser.get("aws_cred", "AWS_S3_BUCKET")
 
-    s3 = boto3.client('s3', aws_access_key_id=AWS_ACC_KEY_ID,
+    s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID,
                       aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
 
     s3_file = eod
