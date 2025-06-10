@@ -6,7 +6,6 @@ Created on Tuesday June 22 00:59:25 2021
 import pandas as pd
 from datetime import datetime
 import configparser
-import pandas as pd
 
 
 URL = 'https://doclib.ngxgroup.com/REST/api/statistics/equities/?market=&sector=&orderby=&pageSize=300&pageNo=0'
@@ -23,6 +22,7 @@ def json2csv(URL=URL):
     df = pd.read_json(URL)
     df = df.dropna()
     df.to_csv(eod, mode='a', header=False, index=False)
+    #print(df.head(2))
 
 
 def main():
