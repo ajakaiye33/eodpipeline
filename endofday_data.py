@@ -3,7 +3,6 @@ Created on Tuesday June 22 00:59:25 2021
 @author:hedgar
 """
 # import necessary modules and packages
-import boto3
 import pandas as pd
 from datetime import datetime
 import configparser
