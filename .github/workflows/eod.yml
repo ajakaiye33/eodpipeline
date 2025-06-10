@@ -24,12 +24,12 @@ jobs:
 
     
       - name: execute py script # run endofday_data.py to get the latest data
-        run: pipenv run python endofday_data.py
+        run: python endofday_data.py
 
       - name: commit & push files
         run: |
-          git config --local user.email ajakzhedgar@gmail.com
-          git config --local user.name ajakaiye33
+          git config --local user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git config --local user.name "${{ secrets.GIT_USER_NAME }}"
           git add -A
           timestamp=$(date --rfc-2822)
           git commit -m "updated data:${timestamp}" || exit 0
